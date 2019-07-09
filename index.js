@@ -14,7 +14,6 @@ module.exports.init = function(config, logger, stats) {
                 debug("connectivity test configured for proxy " + proxyName);
                 var proxyPath = proxyConfig.proxyPath;
                 var method = proxyConfig.requestMethod;
-                req.url = "https://httpbin.org/anything";
                 if (req.targetPath === proxyPath && req.method === method) {
                     debug("Connectivity test requested");
                     req.targetPath = proxyConfig.targetPath || req.targetPath;
@@ -24,8 +23,9 @@ module.exports.init = function(config, logger, stats) {
                         req.targetPort = targetEndpoint.targetPort || req.targetPort;
                         req.targetSecure = targetEndpoint.hasOwnProperty("targetSecure") ? targetEndpoint.targetSecure : req.targetSecure;
                         req.targetHostname = targetEndpoint.targetHostname || req.targetHostname;
-                        var url = ( req.targetSecure ? "https://" : "http://" ) + req.targetHostname + ":" + req.targetPort + req.targetPath;
                     }
+                    var url = ( req.targetSecure ? "https://" : "http://" ) + req.targetHostname + ":" + req.targetPort + req.targetPath;
+                    debug("Connectivity test to " + req.method + " " + url);
                     req.connectivityTest = true;
                 }
                 else if (req.targetPath == proxyConfig.verifyPath && req.method === proxyConfig.verifyMethod) {
