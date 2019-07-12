@@ -14,6 +14,9 @@ module.exports.init = function(config, logger, stats) {
                 debug("connectivity test configured for proxy " + proxyName);
                 var proxyPath = proxyConfig.proxyPath;
                 var method = proxyConfig.requestMethod;
+                debug("config connectPath: " + proxyPath);
+                debug("config verifyPath: " + proxyConfig.verifyPath);
+                debug("targetPath: " + req.targetPath);
                 if (req.targetPath === proxyPath && req.method === method) {
                     debug("Connectivity test requested");
                     req.targetPath = proxyConfig.targetPath || req.targetPath;
